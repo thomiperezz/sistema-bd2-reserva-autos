@@ -4,7 +4,7 @@ Este directorio contiene los scripts SQL del proyecto.
 
 ## Archivo
 
-- `TpUberSQL.sql`: script SQL principal para crear la base de datos y tablas del proyecto.
+- `TpUberSQL.sql`: script SQL principal para crear la base de datos, tablas e insertar datos de ejemplo del proyecto.
 
 ## Uso
 

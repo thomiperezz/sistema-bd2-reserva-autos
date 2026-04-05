@@ -35,4 +35,5 @@ docker exec -i cassandraBd cqlsh 127.0.0.1 9042 < data/cassandra/cassandra_inser
 ## Notas
 
 - Asegúrate de que el puerto `9042` no esté ocupado.
+- El keyspace utilizado es `cassandratp`.
 - Si necesitas cambiar el keyspace, edita `cassandra_inserts.cql` antes de cargarlo.

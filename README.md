@@ -1,6 +1,12 @@
-# Proyecto Sistema de Reserva de Autos
+# Sistema de Reserva de Autos (Proyecto BD2)
 
-Estructura propuesta para el proyecto con varias bases de datos (SQL, MongoDB, Cassandra).
+Proyecto similar a Uber que utiliza múltiples bases de datos: SQL Server, MongoDB y Cassandra.
+
+## Requisitos previos
+
+- Docker y Docker Compose instalados
+- Python 3.8+
+- PowerShell (para scripts de automatización)
 
 ## Estructura de carpetas
 
@@ -36,13 +42,13 @@ docker run --name mongo-container -d -p 27017:27017 icampo648/mongo:latest
 docker run --name cassandraBd -d -p 9042:9042 icampo648/cassandra:latest
 ```
 
-- PostgreSQL (SQL):
+- SQL Server:
 
 ```powershell
 docker run --name sqlserver-db -e ACCEPT_EULA=Y -e SA_PASSWORD=YourStrong!Passw0rd -e MSSQL_DB=uberdb -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
 ```
 
-- MySQL (alternativa SQL):
+- MySQL (alternativa):
 
 ```powershell
 docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=uberdb -p 3306:3306 -d mysql:latest
@@ -92,7 +98,7 @@ docker start cassandraBd
 cqlsh 127.0.0.1 9042 -f data/cassandra/cassandra_inserts.cql
 ```
 
-### SQL
+### SQL Server
 
 1. Iniciar el contenedor SQL Server.
 
@@ -143,4 +149,33 @@ python src/API-Proyecto-BD2.py
 
 La API estará disponible en `http://localhost:5000`.
 
-## Automatización
+## Endpoints de la API
+
+### SQL Server
+- `GET /users/top3` - Top 3 usuarios con más reseñas
+- `GET /pay-method/lessused` - Método de pago menos utilizado
+- `GET /drivers/inactive` - Conductores inactivos en el último mes
+- `GET /coincidencias` - Conductores y pasajeros que coincidieron en más de 1 viaje
+- `GET /cars/toyota` - Autos Toyota con patente terminada en 'D'
+- `GET /users/fivestars` - Usuarios con calificación 5 o menor a 2
+- `GET /travels/avgtime` - Tiempo promedio de viajes
+
+### MongoDB
+- `GET /mongo/users/top3` - Top 3 usuarios con más reseñas
+- `GET /mongo/pay-method/lessused` - Método de pago menos utilizado
+- `GET /mongo/drivers/inactive` - Conductores inactivos
+- `GET /mongo/coincidencias` - Coincidencias de viajes
+- `GET /mongo/users/stars` - Usuarios por calificaciones
+- `GET /mongo/travels/avgtime` - Tiempo promedio
+- `POST /mongo/conductores` - Insertar conductor
+- `POST /mongo/usuarios` - Insertar usuario
+- `POST /mongo/vehiculos` - Insertar vehículo
+- `POST /mongo/viajes` - Insertar viaje
+- `POST /mongo/usuarios/resena` - Agregar reseña
+- `POST /mongo/usuarios/pago` - Agregar pago
+
+### Cassandra
+- `GET /cassandra/cars/toyota` - Autos Toyota con patente terminada en 'D'
+- `GET /cassandra/users/stars` - Usuarios por calificaciones
+- `POST /cassandra/resenas` - Insertar reseña
+- `POST /cassandra/vehiculos` - Insertar vehículo

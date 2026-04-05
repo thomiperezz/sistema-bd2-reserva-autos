@@ -42,7 +42,7 @@ cqlsh 127.0.0.1 9042 -f data/cassandra/cassandra_inserts.cql
 
 3. Ver documentación adicional en `data/cassandra/README.md`.
 
-### SQL
+### SQL Server
 
 1. Iniciar el contenedor SQL Server.
 

@@ -19,9 +19,3 @@ docker run --name mongo-container -d -p 27017:27017 icampo648/mongo:latest
 ```powershell
 mongosh --file data/mongo/mongo_inserts.js
 ```
-
-O con el shell clásico de MongoDB:
-
-```powershell
-mongo data/mongo/mongo_inserts.js
-```
