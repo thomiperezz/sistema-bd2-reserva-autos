@@ -1,5 +1,7 @@
 # Sistema de Reserva de Autos (Proyecto BD2)
 
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg) ![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-blue.svg) ![MongoDB](https://img.shields.io/badge/MongoDB-5.0+-green.svg) ![Cassandra](https://img.shields.io/badge/Cassandra-4.0+-green.svg) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 Proyecto similar a Uber que utiliza múltiples bases de datos: SQL Server, MongoDB y Cassandra.
 
 ## Requisitos previos
