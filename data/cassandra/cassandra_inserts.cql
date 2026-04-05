@@ -5,7 +5,7 @@ CREATE TABLE Vehiculos (
 	id_vehiculo INT,
 	id_conductor INT,
 	modelo TEXT,
-	PRIMARY KEY((marca,ultima_letra_patente)patente,id_vehiculo));
+	PRIMARY KEY((marca,ultima_letra_patente),patente,id_vehiculo));
 
 INSERT INTO Vehiculos (patente, marca, ultima_letra_patente, id_vehiculo, id_conductor, modelo)
 VALUES ('ABC123', 'Toyota', '3', 1, 1, 'Corolla');
@@ -24,3 +24,15 @@ VALUES ('GHI654', 'Honda', '4', 5, 5, 'Civic');
 
 INSERT INTO Vehiculos (patente, marca, ultima_letra_patente, id_vehiculo, id_conductor, modelo)
 VALUES ('GJI85D', 'Toyota', 'D', 5, 5, 'Sedán');
+
+CREATE TABLE resenas (
+	id_resena INT,
+	id_usuario INT,
+	calificacion INT,
+	PRIMARY KEY(id_resena));
+
+INSERT INTO resenas (id_resena, id_usuario, calificacion) VALUES (1, 1, 5);
+INSERT INTO resenas (id_resena, id_usuario, calificacion) VALUES (2, 2, 4);
+INSERT INTO resenas (id_resena, id_usuario, calificacion) VALUES (3, 3, 3);
+INSERT INTO resenas (id_resena, id_usuario, calificacion) VALUES (4, 4, 2);
+INSERT INTO resenas (id_resena, id_usuario, calificacion) VALUES (5, 5, 1);

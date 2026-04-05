@@ -22,13 +22,14 @@ def objectid_to_str(obj):
         return str(obj)
     raise TypeError(f"Object of type {obj} is not serializable")
 
-#Conexion con SQL
+#Conexion con SQL Server
 def get_db_connection():
     conn = pyodbc.connect(
         'DRIVER={ODBC Driver 17 for SQL Server};'
-        'SERVER=.;'
-        'DATABASE=Practicas;'
-        'Trusted_Connection=yes;'
+        'SERVER=localhost;'
+        'DATABASE=uberdb;'
+        'UID=sa;'
+        'PWD=YourStrong!Passw0rd;'
     )
     return conn
 
@@ -40,7 +41,7 @@ def get_cassandra_connection():
     return session
 
 #===========================================
-# ENDPOINTS GET - SQL SERVER
+# ENDPOINTS GET - SQL Server
 #===========================================
 
 #¿Cual es el top 3 de usuarios que han dado mas reseñas? 
@@ -470,7 +471,7 @@ def mongo_insertar_vehiculo():
             "modelo": datos["modelo"],
             "año": datos["año"],
             "color": datos["color"],
-            "ubicaion": datos["ubicacion"]
+            "ubicacion": datos["ubicacion"]
         }
         
         resultado = db.vehiculos.insert_one(vehiculo)

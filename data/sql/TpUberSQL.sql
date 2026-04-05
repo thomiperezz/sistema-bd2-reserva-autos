@@ -1,4 +1,6 @@
-create database UBER2
+create database uberdb
+
+use uberdb
 
 create table Usuarios(
 id_usuario int,
@@ -68,15 +70,15 @@ constraint Pago_PK primary key(id_pago),
 constraint Pago_Viaje_FK foreign key(id_viaje) references Viaje(id_viaje)
 );
 
-create table Reseña(
-id_reseña int,
+create table Reseï¿½a(
+id_reseï¿½a int,
 id_usuario int,
 id_viaje int,
 calificacion int,
-reseña varchar(200),
-constraint Reseña_PK primary key(id_reseña),
-constraint Reseña_Usuarios_FK foreign key(id_Usuario) references Usuarios(id_usuario),
-constraint Reseña_Viaje_FK foreign key(id_viaje) references Viaje(id_viaje)
+reseï¿½a varchar(200),
+constraint Reseï¿½a_PK primary key(id_reseï¿½a),
+constraint Reseï¿½a_Usuarios_FK foreign key(id_Usuario) references Usuarios(id_usuario),
+constraint Reseï¿½a_Viaje_FK foreign key(id_viaje) references Viaje(id_viaje)
 );
 
 CREATE PROCEDURE ingresarUsuario
@@ -146,16 +148,16 @@ BEGIN
     VALUES (@idPago, @idViaje, @fechaPago, @total, @estado, @metodoDePago);
 END
 
-CREATE PROCEDURE ingresarReseña
-    @idReseña INT,
+CREATE PROCEDURE ingresarReseï¿½a
+    @idReseï¿½a INT,
     @idUsuario INT,
     @idViaje INT,
     @calificacion INT,
-    @reseña VARCHAR(200)
+    @reseï¿½a VARCHAR(200)
 AS
 BEGIN
-    INSERT INTO Reseña (id_reseña, id_usuario, id_viaje, calificacion, reseña)
-    VALUES (@idReseña, @idUsuario, @idViaje, @calificacion, @reseña);
+    INSERT INTO Reseï¿½a (id_reseï¿½a, id_usuario, id_viaje, calificacion, reseï¿½a)
+    VALUES (@idReseï¿½a, @idUsuario, @idViaje, @calificacion, @reseï¿½a);
 END
 
 CREATE PROCEDURE ingresarUbicacionVehiculo
@@ -207,10 +209,10 @@ BEGIN
     SELECT *FROM Pago;
 END
 
-CREATE PROCEDURE leerReseñas
+CREATE PROCEDURE leerReseï¿½as
 AS
 BEGIN
-    SELECT *FROM Reseña;
+    SELECT *FROM Reseï¿½a;
 END
 
 CREATE PROCEDURE actualizarUsuario
@@ -326,27 +328,27 @@ BEGIN
 END
 
 CREATE PROCEDURE actualizarResena
-    @id_reseña INT,
+    @id_reseï¿½a INT,
     @id_usuario INT,
     @id_viaje INT,
     @calificacion INT,
-    @reseña VARCHAR(200)
+    @reseï¿½a VARCHAR(200)
 AS
 BEGIN
-    UPDATE Reseña
+    UPDATE Reseï¿½a
     SET id_usuario = @id_usuario,
         id_viaje = @id_viaje,
         calificacion = @calificacion,
-        reseña = @reseña
-    WHERE id_reseña = @id_reseña;
+        reseï¿½a = @reseï¿½a
+    WHERE id_reseï¿½a = @id_reseï¿½a;
 END
 
 CREATE PROCEDURE borrarTablas
 AS
 BEGIN
-    -- Desactivar restricciones de clave foránea
-    ALTER TABLE Reseña NOCHECK CONSTRAINT Reseña_Usuarios_FK;
-    ALTER TABLE Reseña NOCHECK CONSTRAINT Reseña_Viaje_FK;
+    -- Desactivar restricciones de clave forï¿½nea
+    ALTER TABLE Reseï¿½a NOCHECK CONSTRAINT Reseï¿½a_Usuarios_FK;
+    ALTER TABLE Reseï¿½a NOCHECK CONSTRAINT Reseï¿½a_Viaje_FK;
     ALTER TABLE Pago NOCHECK CONSTRAINT Pago_Viaje_FK;
     ALTER TABLE Viaje NOCHECK CONSTRAINT Usuarios_Viaje_FK;
     ALTER TABLE Viaje NOCHECK CONSTRAINT Conductor_Viaje_FK;
@@ -355,7 +357,7 @@ BEGIN
     ALTER TABLE Veiculo NOCHECK CONSTRAINT Veiculo_Conductor_FK;
 
     -- Borrar datos de las tablas
-    DELETE FROM Reseña;
+    DELETE FROM Reseï¿½a;
     DELETE FROM Pago;
     DELETE FROM Viaje;
     DELETE FROM ubicacionVeiculo;
@@ -363,9 +365,9 @@ BEGIN
     DELETE FROM Conductor;
     DELETE FROM Usuarios;
 
-    -- Rehabilitar restricciones de clave foránea
-    ALTER TABLE Reseña WITH CHECK CHECK CONSTRAINT Reseña_Usuarios_FK;
-    ALTER TABLE Reseña WITH CHECK CHECK CONSTRAINT Reseña_Viaje_FK;
+    -- Rehabilitar restricciones de clave forï¿½nea
+    ALTER TABLE Reseï¿½a WITH CHECK CHECK CONSTRAINT Reseï¿½a_Usuarios_FK;
+    ALTER TABLE Reseï¿½a WITH CHECK CHECK CONSTRAINT Reseï¿½a_Viaje_FK;
     ALTER TABLE Pago WITH CHECK CHECK CONSTRAINT Pago_Viaje_FK;
     ALTER TABLE Viaje WITH CHECK CHECK CONSTRAINT Usuarios_Viaje_FK;
     ALTER TABLE Viaje WITH CHECK CHECK CONSTRAINT Conductor_Viaje_FK;
@@ -373,22 +375,63 @@ BEGIN
     ALTER TABLE ubicacionVeiculo WITH CHECK CHECK CONSTRAINT ubicacionVeiculo_Veiculo_FK;
     ALTER TABLE Veiculo WITH CHECK CHECK CONSTRAINT Veiculo_Conductor_FK;
 END
+-- Insertar datos de ejemplo
 
-/*top 3 de usuarios que realizan mas reseñas*/
-SELECT TOP 3 id_usuario, COUNT(*) AS total_reseñas
-FROM Reseña
+INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES
+(1, 'Juan', 'PÃ©rez', 'juan.perez@example.com', 123456789),
+(2, 'MarÃ­a', 'GÃ³mez', 'maria.gomez@example.com', 987654321),
+(3, 'Carlos', 'LÃ³pez', 'carlos.lopez@example.com', 456123789),
+(4, 'Ana', 'Torres', 'ana.torres@example.com', 321654987);
+
+INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES
+(1, 'Carlos', 'GarcÃ­a', 'carlos.garcia@example.com', 1100011122),
+(2, 'Laura', 'PÃ©rez', 'laura.perez@example.com', 1100033344),
+(3, 'Pedro', 'SÃ¡nchez', 'pedro.sanchez@example.com', 1100055566),
+(4, 'Claudia', 'LÃ³pez', 'claudia.lopez@example.com', 1100077788),
+(5, 'Esteban', 'MartÃ­nez', 'esteban.martinez@example.com', 1100099900);
+
+INSERT INTO Veiculo (id_veiculo, id_conductor, marca, patente, modelo) VALUES
+(1, 1, 'Toyota', 'ABC123', 'Corolla'),
+(2, 2, 'Honda', 'DEF456', 'Civic'),
+(3, 3, 'Ford', 'GHI789', 'Focus'),
+(4, 4, 'Chevrolet', 'JKL012', 'Cruze'),
+(5, 5, 'Nissan', 'MNO345', 'Sentra');
+
+INSERT INTO Viaje (id_viaje, id_usuario, id_conductor, id_veiculo, punto_partida, destino, distancia, tiempo_viaje, estado, fecha_hora_inicio, fecha_hora_final) VALUES
+(1, 1, 1, 1, 'Av. Libertador 5000, Buenos Aires', 'Calle 25 de Mayo 1200, Buenos Aires', 10.00, '00:15:00', 'Completado', '2024-10-01 08:00:00', '2024-10-01 08:15:00'),
+(2, 2, 2, 2, 'Av. Corrientes 3000, Buenos Aires', 'Calle San MartÃ­n 4000, Buenos Aires', 8.00, '00:12:00', 'Completado', '2024-10-01 09:00:00', '2024-10-01 09:12:00'),
+(3, 2, 2, 2, 'Av. de Mayo 2000, Buenos Aires', 'Calle Paseo ColÃ³n 500, Buenos Aires', 5.00, '00:10:00', 'Completado', '2024-10-01 10:00:00', '2024-10-01 10:10:00'),
+(4, 3, 3, 3, 'Calle Florida 100, Buenos Aires', 'Av. 9 de Julio 3000, Buenos Aires', 2.00, '00:05:00', 'Completado', '2024-10-01 11:00:00', '2024-10-01 11:05:00'),
+(5, 4, 4, 4, 'Av. Rivadavia 6000, Buenos Aires', 'Av. Callao 1000, Buenos Aires', 7.00, '00:10:00', 'Completado', '2024-11-01 12:00:00', '2024-11-01 12:10:00');
+
+INSERT INTO Pago (id_pago, id_viaje, fechaPago, total, estado, metodoDePago) VALUES
+(1, 1, '2024-10-01', 1500, 'Completado', 'Tarjeta'),
+(2, 2, '2024-10-01', 700, 'Completado', 'Efectivo'),
+(3, 3, '2024-10-01', 700, 'Completado', 'Efectivo'),
+(4, 4, '2024-10-01', 300, 'Completado', 'Tarjeta'),
+(5, 5, '2024-11-01', 100, 'Completado', 'Efectivo');
+
+INSERT INTO ReseÃ±a (id_reseÃ±a, id_usuario, id_viaje, calificacion, reseÃ±a) VALUES
+(1, 1, 1, 5, 'Excelente servicio!'),
+(2, 2, 2, 4, 'Buen viaje, conductor amable.'),
+(3, 2, 3, 4, 'Buen viaje, conductor amable x2.'),
+(4, 3, 4, 3, 'Viaje regular, podrÃ­a mejorar.'),
+(5, 4, 5, 2, 'No fue lo que esperaba.');
+/*top 3 de usuarios que realizan mas reseï¿½as*/
+SELECT TOP 3 id_usuario, COUNT(*) AS total_reseï¿½as
+FROM Reseï¿½a
 GROUP BY id_usuario
-ORDER BY total_reseñas DESC;
+ORDER BY total_reseï¿½as DESC;
 
 
-/*¿Cual es el metodo de pago menos utilizado en la plataforma?*/
+/*ï¿½Cual es el metodo de pago menos utilizado en la plataforma?*/
 SELECT TOP 1 metodoDePago, COUNT(*) AS total_uso
 FROM Pago
 GROUP BY metodoDePago
 ORDER BY total_uso ASC;
 
-/*¿Cuales son los conductores que han estado inactivos en el ultimo mes?*/
-SELECT c.id_conductor, c.nombre -- Asegúrate de que esta columna exista en tu tabla Conductor
+/*ï¿½Cuales son los conductores que han estado inactivos en el ultimo mes?*/
+SELECT c.id_conductor, c.nombre -- Asegï¿½rate de que esta columna exista en tu tabla Conductor
 FROM Conductor c
 LEFT JOIN Viaje v ON c.id_conductor = v.id_conductor AND v.fecha_hora_inicio >= DATEADD(MONTH, -1, GETDATE())
 WHERE v.id_viaje IS NULL;
@@ -411,23 +454,23 @@ FROM Veiculo
 WHERE marca = 'Toyota' AND patente LIKE '%D';
 
 
-/*seleccionar los usuarios que escribieron una reseña de 5 o menos 2 estrellas*/
+/*seleccionar los usuarios que escribieron una reseï¿½a de 5 o menos 2 estrellas*/
 SELECT DISTINCT id_usuario
-FROM Reseña
+FROM Reseï¿½a
 WHERE calificacion = 5 OR calificacion <= 2;
 
 
-INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (1, 'Juan', 'Pérez', 'juan.perez@example.com', 123456789);
-INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (2, 'María', 'Gómez', 'maria.gomez@example.com', 987654321);
-INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (3, 'Carlos', 'López', 'carlos.lopez@example.com', 456123789);
+INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (1, 'Juan', 'Pï¿½rez', 'juan.perez@example.com', 123456789);
+INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (2, 'Marï¿½a', 'Gï¿½mez', 'maria.gomez@example.com', 987654321);
+INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (3, 'Carlos', 'Lï¿½pez', 'carlos.lopez@example.com', 456123789);
 INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (4, 'Ana', 'Torres', 'ana.torres@example.com', 321654987);
-INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (5, 'Laura', 'Fernández', 'laura.fernandez@example.com', 654789123);
+INSERT INTO Usuarios (id_usuario, nombre, apellido, mail, telefono) VALUES (5, 'Laura', 'Fernï¿½ndez', 'laura.fernandez@example.com', 654789123);
 
-INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (1, 'Pedro', 'Sánchez', 'pedro.sanchez@example.com', 111222333);
-INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (2, 'Lucía', 'Martínez', 'lucia.martinez@example.com', 444555666);
-INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (3, 'Javier', 'Ramírez', 'javier.ramirez@example.com', 777888999);
-INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (4, 'Elena', 'García', 'elena.garcia@example.com', 333444555);
-INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (5, 'Mario', 'Hernández', 'mario.hernandez@example.com', 666777888);
+INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (1, 'Pedro', 'Sï¿½nchez', 'pedro.sanchez@example.com', 111222333);
+INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (2, 'Lucï¿½a', 'Martï¿½nez', 'lucia.martinez@example.com', 444555666);
+INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (3, 'Javier', 'Ramï¿½rez', 'javier.ramirez@example.com', 777888999);
+INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (4, 'Elena', 'Garcï¿½a', 'elena.garcia@example.com', 333444555);
+INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (5, 'Mario', 'Hernï¿½ndez', 'mario.hernandez@example.com', 666777888);
 INSERT INTO Conductor (id_conductor, nombre, apellido, mail, telefono) VALUES (6, 'Maximo', 'Suarez', 'mario.hernandez@example.com', 666777888);
 
 INSERT INTO Veiculo (id_veiculo, id_conductor, marca, patente, modelo) VALUES (1, 1, 'Toyota', 'ABC123', 'Corolla');
@@ -459,7 +502,7 @@ INSERT INTO Pago (id_pago, id_viaje, fechaPago, total, estado, metodoDePago) VAL
 INSERT INTO Pago (id_pago, id_viaje, fechaPago, total, estado, metodoDePago) VALUES (4, 4, '2024-10-01', 100, 'Completado', 'Efectivo');
 INSERT INTO Pago (id_pago, id_viaje, fechaPago, total, estado, metodoDePago) VALUES (5, 5, '2024-10-01', 200, 'Completado', 'Tarjeta');
 
-INSERT INTO Reseña (id_reseña, id_usuario, id_viaje, calificacion, reseña) VALUES (1, 1, 1, 5, 'Excelente servicio!');
-INSERT INTO Reseña (id_reseña, id_usuario, id_viaje, calificacion, reseña) VALUES (2, 2, 2, 4, 'Buen viaje, conductor amable.');
-INSERT INTO Reseña (id_reseña, id_usuario, id_viaje, calificacion, reseña) VALUES (3, 3, 3, 3, 'Viaje regular, podría mejorar.');
-INSERT INTO Reseña (id_reseña, id_usuario, id_viaje, calificacion, reseña) VALUES (4, 4, 4, 2, 'No fue lo que esperaba.');
+INSERT INTO Reseï¿½a (id_reseï¿½a, id_usuario, id_viaje, calificacion, reseï¿½a) VALUES (1, 1, 1, 5, 'Excelente servicio!');
+INSERT INTO Reseï¿½a (id_reseï¿½a, id_usuario, id_viaje, calificacion, reseï¿½a) VALUES (2, 2, 2, 4, 'Buen viaje, conductor amable.');
+INSERT INTO Reseï¿½a (id_reseï¿½a, id_usuario, id_viaje, calificacion, reseï¿½a) VALUES (3, 3, 3, 3, 'Viaje regular, podrï¿½a mejorar.');
+INSERT INTO Reseï¿½a (id_reseï¿½a, id_usuario, id_viaje, calificacion, reseï¿½a) VALUES (4, 4, 4, 2, 'No fue lo que esperaba.');

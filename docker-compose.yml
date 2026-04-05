@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: icampo648/mongo:latest
+    container_name: mongo-container
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data/mongo:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ['CMD', 'mongo', '--eval', 'db.runCommand({ ping: 1 })']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  cassandra:
+    image: icampo648/cassandra:latest
+    container_name: cassandraBd
+    ports:
+      - '9042:9042'
+    environment:
+      - CASSANDRA_START_RPC=true
+    healthcheck:
+      test: ['CMD', 'cqlsh', '-e', 'describe keyspaces']
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
+  postgres:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-db
+    ports:
+      - '1433:1433'
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong!Passw0rd
+      MSSQL_DB: uberdb
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ['CMD-SHELL', '/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -Q "SELECT 1"']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql-db
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: uberdb
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-uroot', '-proot']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mysql_data:
+  sqlserver_data:
